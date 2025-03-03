@@ -1,0 +1,61 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; // Цвет фона страницы
+}
+
+.login-box {
+  width: 60vh; // Ширина квадрата равна 60% от высоты страницы
+  height: 60vh; // Высота квадрата
+  background-color: rgb(97, 44, 44); // Цвет фона квадрата
+  border-radius: 20px; // Закругленные углы
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Тень для визуального эффекта
+}
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-button {
+  width: 80%;
+  padding: 10px;
+  background-color: #007bff; // Цвет кнопки
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+  &:disabled {
+    background-color: #ccc; // Цвет кнопки при отключении
+    cursor: not-allowed;
+  }
+}
+
+.login-text {
+  margin-top: 20px;
+}
+
+.login-link {
+  color: #007bff; // Цвет ссылки
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline; // Подчеркивание при наведении
+  }
+}
+  
