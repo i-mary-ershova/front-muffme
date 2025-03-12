@@ -1,24 +1,42 @@
+@import '@/styles/_variables.scss';
+
 .header {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
+    //display: flex;
+    align-items: center;
+    justify-content: space-between;
     // padding: 20px;
     left: 0;
     right: 0;
-    background-color: #A299FF; // Полупрозрачный фон
+    background-color: $purple; // Полупрозрачный фон
 
-    position: sticky;
+    position: fixed;
     z-index: 10;
-    top: -1px;
-    margin: 46px 0 80px 0;
+    top: 0px;
+    margin: 5px 5px 60px 0;
     height: 60px;
     margin-bottom: 46px;
 }
 
 .logo_img {
     position: relative;
-    width: 182px;
-    height: 84px;
+    width: 182px; 
+    height: 50px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+
+    &Icons {
+        //display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .wrapper {
@@ -27,26 +45,39 @@ align-items: center;
 justify-content: space-between;
 }
 
-.title {
-    font-size: 24px;
-    margin-left: 20px;
-}
+// .title {
+//     font-size: 24px;
+//     margin-left: 20px;
+// }
 
 .navigation {
     display: flex;
+    align-items: center;
     gap: 15px;
+    padding: 10px 20px;
+    background: #fff; // Белый фон
+    border-radius: 15px; // Скругленные углы
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Тень для объема
 
     a {
         text-decoration: none;
-        color: #333;
-        font-weight: bold;
+        color: black;
+    
+        padding: 5px 10px;
+        transition: color 0.3s;
 
         &:hover {
-            color: #ff66b2; // Цвет при наведении
+            color: $darkpurple; // Цвет при наведении
         }
     }
 }
 
+.loginButton {
+    background-color: rgba(0, 0, 0, 0.0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
 
 

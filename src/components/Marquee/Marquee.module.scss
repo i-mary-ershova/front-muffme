@@ -1,26 +1,16 @@
-.marquee {
-    position: fixed; /* Закрепляем строку в верхней части экрана */
-    top: 0; /* Ставим на верх */
-    left: 0; /* Ставим на левую сторону */
-    right: 0; /* Растягиваем на всю ширину */
-    background-color: #fff; /* Цвет фона */
-    white-space: nowrap; /* Запрещаем перенос строк */
-    overflow: hidden; /* Скрываем переполнение */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень под строкой */
+
+  .marquee {
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    //background-color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
   .marquee span {
     display: inline-block;
-    padding-left: 100%; /* Начальное положение текста за пределами экрана */
-    animation: marquee 10s linear infinite; /* Анимация */
+    padding-left: 0%;
   }
-  
-  @keyframes marquee {
-    from {
-      transform: translate(0); /* Начальное положение */
-    }
-    to {
-      transform: translate(-100%); /* Конечное положение */
-    }
-  }
-  
