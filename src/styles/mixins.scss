@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 @mixin h1-title {
   color: $black-color;
@@ -9,7 +9,6 @@
   line-height: 90px;
   letter-spacing: 1px;
 }
-
 
 @mixin h2-title {
   color: $black-color;

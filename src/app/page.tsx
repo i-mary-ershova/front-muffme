@@ -1,23 +1,21 @@
-// src/App.tsx
 'use client'
 
 import React from 'react';
-//import Header from '@/components/Header/index';
-//import Login from '@/components/Login/index';
-import Marquee from '@/components/Marquee/index';
-//import '@/styles/index.scss';
+import MainHero from '@/components/MainHero';
+import DessertSection from '@/components/DessertSection';
+import Marquee from '@/components/Marquee';
 
 const App: React.FC = () => {
     return (
-        // <div>
-        //     <Header />
-        //     <Login />
-        // </div>
+        <main>
+            <MainHero />
+            <Marquee />
+            <DessertSection />
+        </main>
 
-        <div className="app">
-            
-            {/* Другие компоненты и контент */}
-            <div style={{ height: '2000px' }}> {/* Пример контента для прокрутки */}
+        /*<div>
+            {/* Другие компоненты и контент }
+            <div style={{ height: '2000px' }}> {/* Пример контента для прокрутки }
                 <h1>Прокрутите страницу вниз!</h1>
             </div>
             {/* <Header />
@@ -25,12 +23,12 @@ const App: React.FC = () => {
                 <Login />
                 {/* <h1>Cup&apos;n&apos;Crafts</h1>
                 <h2>Первая в России кондитерская-конструктор</h2>
-                </main> */}
+                </main> }
             <Marquee />
-            <div style={{ height: '2000px' }}> {/* Пример контента для прокрутки */}
+            <div style={{ height: '2000px' }}> {/* Пример контента для прокрутки }
                 <h1>Прокрутите страницу вниз!</h1>
             </div>
-        </div>
+        </div>*/
     );
 };
 

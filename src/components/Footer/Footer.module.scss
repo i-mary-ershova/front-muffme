@@ -1,0 +1,67 @@
+@use '@/styles/variables.scss' as *;
+
+.footer {
+    position: relative;
+    background-color: $purple;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1312px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .logoContainer {
+    flex: 1;
+    display: flex;
+    padding: 30px 10% 0 10%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .navContainer {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .navContainer nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .navContainer nav ul li {
+    margin: 8px 0;
+  }
+  
+  .navContainer nav ul li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .socialIcons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .address {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  
+  .copyright {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  

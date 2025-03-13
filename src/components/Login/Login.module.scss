@@ -1,57 +1,65 @@
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0; // Цвет фона страницы
-}
+@use '@/styles/variables.scss' as *;
 
-.login-box {
-  width: 60vh; // Ширина квадрата равна 60% от высоты страницы
-  height: 60vh; // Высота квадрата
-  background-color: rgb(97, 44, 44); // Цвет фона квадрата
-  border-radius: 20px; // Закругленные углы
+// .container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   background-color: #f0f0f0; // Цвет фона страницы
+// }
+.box {
+  position: fixed;  /* Keeps it in place even when scrolling */
+  top: 70px;        /* Adjust based on your header height */
+  right: 20px;      /* 20px from the right edge */
+  width: 40vh;      /* 40% of the viewport height */
+  height: 40vh;     /* Same as width to keep it square */
+  background-color: $lightpink; /* Light gray background */
+  border-radius: 20px; /* Rounded corners */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Тень для визуального эффекта
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
 }
 
-.login-title {
+
+.title {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-.login-input {
+.input {
   width: 80%;
   padding: 10px;
+  outline: none;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid $purple;
   border-radius: 5px;
 }
 
-.login-button {
+.button {
   width: 80%;
   padding: 10px;
-  background-color: #007bff; // Цвет кнопки
+  background-color: $darkred; // Цвет кнопки
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   
   &:disabled {
-    background-color: #ccc; // Цвет кнопки при отключении
+    background-color: rgba(0, 0, 0, 0.0); // Цвет кнопки при отключении
     cursor: not-allowed;
+    border: 1px solid $darkred;
+    color: $darkred;
   }
 }
 
-.login-text {
+.text {
   margin-top: 20px;
 }
 
-.login-link {
-  color: #007bff; // Цвет ссылки
+.link {
+  color: $darkred; // Цвет ссылки
   text-decoration: none;
 
   &:hover {

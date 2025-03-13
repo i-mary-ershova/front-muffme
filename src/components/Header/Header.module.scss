@@ -1,24 +1,42 @@
+@use '@/styles/variables.scss' as *;
+
 .header {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
+    //display: flex;
+    align-items: center;
+    justify-content: space-between;
     // padding: 20px;
     left: 0;
     right: 0;
-    background-color: #A299FF; // Полупрозрачный фон
+    background-color: $purple; // Полупрозрачный фон
 
-    position: sticky;
+    position: fixed;
     z-index: 10;
-    top: -1px;
-    margin: 46px 0 80px 0;
-    height: 60px;
+    top: 0px;
+    margin: 0px 5px 60px 0;
+    height: 80px;
     margin-bottom: 46px;
 }
 
 .logo_img {
     position: relative;
-    width: 182px;
-    height: 84px;
+    width: 182px; 
+    height: 50px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+
+    &Icons {
+        //display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .wrapper {
@@ -27,177 +45,33 @@ align-items: center;
 justify-content: space-between;
 }
 
-.title {
-    font-size: 24px;
-    margin-left: 20px;
-}
-
 .navigation {
     display: flex;
+    align-items: center;
     gap: 15px;
+    padding: 10px 20px;
+    background: $lightpink;
+    border-radius: 15px 15px 0 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
     a {
         text-decoration: none;
-        color: #333;
-        font-weight: bold;
+        color: black;
+    
+        padding: 5px 10px;
+        transition: color 0.3s;
 
         &:hover {
-            color: #ff66b2; // Цвет при наведении
+            color: $darkpurple; // Цвет при наведении
         }
     }
 }
 
+.loginButton {
+    background-color: rgba(0, 0, 0, 0.0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
 
-
-// .header {
-//     position: sticky;
-//     z-index: 10;
-//     top: -1px;
-//     margin: 46px 0 80px 0;
-//     height: 60px;
-//     // margin-bottom: 46px;
-//     background: $white-color;
-// }
-
-// .wrapper {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-// }
-
-// .logo {
-//     position: relative;
-//     width: 182px;
-//     height: 84px;
-//     transition: $transition;
-// }
-
-// .phone {
-//     display: flex;
-//     align-items: center;
-
-//     &WrapImage {
-//         position: relative;
-//         width: 40px;
-//         height: 40px;
-//         margin-right: 12px;
-//         transition: $transition;
-//     }
-
-//     &Wrap {
-//         display: flex;
-//         flex-direction: column;
-//     }
-
-//     &Text {
-//         color: $black-color;
-//         font-family: $font-alegreya;
-//         font-size: 24px;
-//         font-style: normal;
-//         font-weight: 900;
-//         letter-spacing: 1.333px;
-//         line-height: normal;
-//         text-transform: uppercase;
-//         transition: $transition;
-
-//         &:hover {
-//             color: $hover-color;
-//         }
-//     }
-
-//     &Time {
-//         @include desc-text;
-//     }
-// }
-
-// .cart {
-//     display: flex;
-//     align-items: flex-end;
-//     cursor: pointer;
-
-//     &WrapImage {
-//         position: relative;
-//         width: 40px;
-//         height: 40px;
-//         transition: $transition;
-//     }
-
-//     &Icon {
-//         position: relative;
-//         margin-right: 12px;
-
-//         &Badge {
-//             position: absolute;
-//             top: -10px;
-//             right: -10px;
-//             width: 20px;
-//             height: 20px;
-//             border-radius: 50%;
-//             background: $hover-color;
-//             color: $white-color;
-//             font-family: $font-roboto;
-//             font-size: 11px;
-//             font-style: normal;
-//             font-weight: 500;
-//             line-height: 21px;
-//             text-align: center
-//         }
-//     }
-
-//     &Text {
-//         display: flex;
-//         flex-direction: column;
-
-//         &Title {
-//             color: $black-color;
-//             font-family: $font-alegreya;
-//             font-size: 18px;
-//             font-style: normal;
-//             font-weight: 900;
-//             letter-spacing: 1px;
-//             line-height: normal;
-//             text-transform: uppercase;
-//             transition: $transition;
-
-//             &:hover {
-//                 color: $hover-color;
-//             }
-//         }
-
-//         &Count {
-//             @include desc-text;
-//             // width: 160px;
-//             height: 18px;
-//         }
-//     }
-// }
-
-// .language {
-//     display: block;
-//     width: 48px;
-//     height: 48px;
-//     border-radius: 50%;
-//     background-color: $card-size-color;
-//     color: $black-color;
-//     font-family: $font-alegreya;
-//     font-size: 18px;
-//     font-style: normal;
-//     font-weight: 900;
-//     letter-spacing: 1px;
-//     line-height: normal;
-//     text-transform: uppercase;
-//     transition: $transition;
-
-//     &:hover {
-//         color: $hover-color;
-//     }
-
-//     &>span {
-//         display: flex;
-//         width: 100%;
-//         height: 100%;
-//         align-items: center;
-//         justify-content: center;
-//     }
-// }
