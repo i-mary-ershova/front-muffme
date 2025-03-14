@@ -1,7 +1,7 @@
 //@import '~modern-normalize/modern-normalize.css';
-@import 'reset';
-@import 'variables';
-@import 'mixins';
+@use 'reset';
+@use 'variables' as *;
+@use 'mixins' as *;
 
 * {
     margin: 0;
@@ -29,31 +29,3 @@
     max-width: 1312px;
     margin: 0 auto;
 }
-
-
-// body {
-//     margin: 0;
-//     font-family: sans-serif; // Убедитесь, что шрифт Kreadon подключен
-// }
-
-// .app {
-//     background: linear-gradient(to bottom, #A299FF, #d3bfff);
-//     height: 100vh;
-// }
-
-// .main-content {
-//     margin-top: 100px; // Отступ для фиксированной шапки
-//     text-align: center;
-    
-
-//     h1 {
-//         font-size: 48px;
-//         margin: 20px 0;
-//     }
-
-//     h2 {
-//         font-size: 24px;
-//         background: linear-gradient(to bottom, #ffffff, #ffccff, #ffffff);
-//         color: #666;
-//     }
-// }

@@ -1,4 +1,4 @@
-@import '@/styles/_variables.scss';
+@use '@/styles/variables.scss' as *;
 
 // .container {
 //   display: flex;
@@ -13,7 +13,7 @@
   right: 20px;      /* 20px from the right edge */
   width: 40vh;      /* 40% of the viewport height */
   height: 40vh;     /* Same as width to keep it square */
-  background-color: #eee6ff; /* Light gray background */
+  background-color: $lightpink; /* Light gray background */
   border-radius: 20px; /* Rounded corners */
   display: flex;
   flex-direction: column;

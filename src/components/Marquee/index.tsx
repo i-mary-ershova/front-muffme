@@ -1,38 +1,42 @@
-// // import React from 'react';
-// // import styles from './Marquee.module.scss'; // Импортируем стили
+import Image from 'next/image';
+import styles from './Marquee.module.scss';
 
-// // const Marquee = () => {
-// //   return (
-// //     <div className={styles.marquee}>
-// //       <span>Десерт твоей мечты ★★★★</span>
-// //     </div>
-// //   );
-// // };
+export const Marquee = () => {
+  // Create an array of 10 elements to repeat the image
+  const repeatedImages = Array(10).fill(null);
 
-// // export default Marquee;
+  return (
+    <div className={styles.marqueeContainer}>
+      <div className={styles.marqueeTrack}>
+        {/* First set of images */}
+        <div className={styles.marqueeContent}>
+          {repeatedImages.map((_, index) => (
+            <Image
+              key={`first-${index}`}
+              src="/images/main/marquee.svg"
+              alt="Marquee"
+              width={200}
+              height={40}
+              className={styles.marqueeImage}
+            />
+          ))}
+        </div>
+        {/* Duplicate set of images for seamless loop */}
+        <div className={styles.marqueeContent}>
+          {repeatedImages.map((_, index) => (
+            <Image
+              key={`second-${index}`}
+              src="/images/main/marquee.svg"
+              alt="Marquee"
+              width={200}
+              height={40}
+              className={styles.marqueeImage}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-
-// import { useEffect } from 'react';
-// import styles from './Marquee.module.scss';
-
-// export default function Marquee() {
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       const marqueeSpan = document.querySelector(`.${styles.marquee} span`);
-//       if (marqueeSpan) {
-//         const scrollX = window.scrollY;
-//         const textWidth = marqueeSpan.clientWidth;
-//         marqueeSpan.style.transform = `translateX(-${scrollX % textWidth}px)`;
-//       }
-//     };
-
-//     window.addEventListener('scroll', handleScroll);
-//     return () => window.removeEventListener('scroll', handleScroll);
-//   }, []);
-
-//   return (
-//     <div className={styles.marquee}>
-//       <span>Your scrolling text goes hereaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
-//     </div>
-//   );
-// }
+export default Marquee;

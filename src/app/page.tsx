@@ -1,17 +1,17 @@
-
 'use client'
 
 import React from 'react';
-//import Header from '@/components/Header/index';
-//import Login from '@/components/Login/index';
-//import Marquee from '@/components/Marquee/index';
-import Test from '@/components/Test/test_req";
+import MainHero from '@/components/MainHero';
+import DessertSection from '@/components/DessertSection';
+import Marquee from '@/components/Marquee';
 
 const App: React.FC = () => {
     return (
-        <div>
-            <Test />
-        </div>
+        <main>
+            <MainHero />
+            <Marquee />
+            <DessertSection />
+        </main>
 
         /*<div>
             {/* Другие компоненты и контент }
