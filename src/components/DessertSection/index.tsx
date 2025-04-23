@@ -8,14 +8,14 @@ export const DessertSection = () => {
       <section className={styles.section}>
         <Image
           src="/images/main/cherry.svg"
-          alt="Cherry Decoration"
+          alt=""
           width={300}
           height={300}
           className={styles.decorationCherry}
         />
         <Image
           src="/images/main/stars.svg"
-          alt="Stars Decoration"
+          alt=""
           width={300}
           height={300}
           className={styles.decorationStars}

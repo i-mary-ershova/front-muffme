@@ -11,8 +11,8 @@
   position: fixed;  /* Keeps it in place even when scrolling */
   top: 70px;        /* Adjust based on your header height */
   right: 20px;      /* 20px from the right edge */
-  width: 40vh;      /* 40% of the viewport height */
-  height: 40vh;     /* Same as width to keep it square */
+  width: 350px;      /* 40% of the viewport height */
+  height: 350px;     /* Same as width to keep it square */
   background-color: $lightpink; /* Light gray background */
   border-radius: 20px; /* Rounded corners */
   display: flex;

@@ -1,16 +1,20 @@
 @use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
 
 .cardContainer {
-  width: 28%;
-  min-width: 300px;
-  aspect-ratio: 1;
+  width: 350px;
+  height: 350px;
   position: relative;
   cursor: pointer;
   transition: transform 0.2s ease;
+  text-decoration: none;
+  display: block;
 
   &:hover {
     transform: translateY(-5px);
   }
+
+
 }
 
 .card {
@@ -44,9 +48,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
   span {
-    color: $darkred;
-    font-size: 20px;
-    font-family: $font-alegreya;
-    font-weight: 700;
+    @include title-medium;
+    color: black;
   }
 } 

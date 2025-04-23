@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from "react";
@@ -17,7 +16,7 @@ export default function Header() {
     };
     return (
         <header className={styles.header}>
-            <div className={styles.wrapper}>
+            <div className={styles.container}>
                 <Link href="/" className={styles.logo_img}>
                     <Image src="/icons/logo.svg" alt="logo" fill
                         style={{ objectFit: 'contain' }} />
@@ -29,10 +28,10 @@ export default function Header() {
                     <div className={styles.icons}>
                     {/* Кнопка для открытия/закрытия формы */}
                     <button className={styles.loginButton} onClick={toggleLogin}>
-                        <Image src="/icons/LK.svg" alt="Личный кабинет" width={30} height={30} />
+                        <Image src="/icons/LK.svg" alt="Личный кабинет" width={30} height={30} className={styles.iconsIcons} />
                     </button>
                         <Link href="/cart">
-                            <Image src="/icons/cart.svg" alt="Корзина" width={45} height={30} className={styles.iconsIcons} />
+                            <Image src="/icons/cart.svg" alt="Корзина" width={30} height={30} className={styles.iconsIcons} />
                         </Link>
                     </div>
                 </nav>

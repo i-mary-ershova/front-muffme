@@ -1,20 +1,27 @@
 @use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
 
 .header {
-    //display: flex;
-    align-items: center;
-    justify-content: space-between;
-    // padding: 20px;
+    width: 100%;
+    position: fixed; // !important;
+    z-index: 10;
+    top: 0;
     left: 0;
     right: 0;
-    background-color: $purple; // Полупрозрачный фон
-
-    position: fixed;
-    z-index: 10;
-    top: 0px;
-    margin: 0px 5px 60px 0;
-    height: 80px;
+    background-color: $purple;
+    height: 70px;
     margin-bottom: 46px;
+}
+
+.container {
+    max-width: 1312px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
 }
 
 .logo_img {
@@ -30,34 +37,37 @@
     margin-left: 15px;
 
     &Icons {
-        //display: flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
     }
 }
 
 .wrapper {
-display: flex;
-align-items: center;
-justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navigation {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 10px 20px;
+    padding: 25px 20px 10px;
     background: $lightpink;
-    border-radius: 15px 15px 0 15px;
+    border-radius: 0 0 15px 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: -15px;
+    right: 20px;
 
     a {
+        @include body-bold;
         text-decoration: none;
         color: black;
-    
         padding: 5px 10px;
         transition: color 0.3s;
 
@@ -70,8 +80,8 @@ justify-content: space-between;
 .loginButton {
     background-color: rgba(0, 0, 0, 0.0);
     border: none;
-    border-radius: 5px;
+    border-radius: 0px;
     cursor: pointer;
-  }
+}
 
 

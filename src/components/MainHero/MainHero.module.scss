@@ -1,28 +1,39 @@
 @use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .pageBackground {
   width: 100%;
   min-height: 100vh;
-  background-color: $lightpink;
+  background: linear-gradient(to bottom, $purple, #d3bfff);
   display: flex;
   justify-content: center;
   padding: 0 0px;
 }
 
 .hero {
-  width: 100%; //потом 100% если слишком узко надо сделать
   min-height: 100vh;
+  width: 100%;
   padding-top: 80px; // To account for the fixed header
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, $purple, #d3bfff);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .topSection {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1312px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -46,30 +57,27 @@
 }
 
 .slogan {
-  color: $black-color;
-  font-size: 36px;
-  font-family: $font-alegreya;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-top: 20px;
+  @include title-medium;
+  color: black;
+
+  //margin-top: 20px;
 }
 
 .mainImage {
   width: 35%;
   height: auto;
   object-fit: contain;
-  margin-right: 40px;
 }
 
 .cardsSection {
   width: 100%;
-  max-width: 1350px;
+  max-width: 1312px;
   margin: 40px auto;
   padding: 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
 }
 
 .bannerContainer {
@@ -92,4 +100,15 @@
     height: 100%;
     object-fit: cover;
   }
+}
+
+.placeholderContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $darkred;
+  font-family: $font-montserrat;
+  font-size: 24px;
+  font-weight: 500;
 } 

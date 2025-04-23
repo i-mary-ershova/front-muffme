@@ -1,8 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import styles from './MainHero.module.scss';
-import ChoiceCard from '../ChoiceCard';
+import { ReactNode } from 'react';
 
-export const MainHero = () => {
+interface MainHeroProps {
+  children: ReactNode;
+}
+
+export const MainHero = ({ children }: MainHeroProps) => {
   return (
     <div className={styles.pageBackground}>
       <section className={styles.hero}>
@@ -29,24 +35,8 @@ export const MainHero = () => {
             priority
           />
         </div>
-
-
         
-        <div className={styles.bannerContainer}>
-          <div className={styles.banner}>
-            <Image
-              src="/images/main/promo.png"
-              alt="Promotional Banner"
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
-          </div>
-        </div>
-
-        {/* <div className={styles.cardsSection}>
-          <ChoiceCard />
-        </div> */}
+        {children}
       </section>
     </div>
   );
