@@ -15,11 +15,11 @@
 
 .pageBackground {
   width: 100%;
-  min-height: 100vh;
+  //min-height: 100vh;
   background: linear-gradient(to bottom, $purple, #d3bfff);
   display: flex;
   justify-content: center;
-  padding: 0 0px;
+  padding: 0 0 40px;
 }
 
 .hero {

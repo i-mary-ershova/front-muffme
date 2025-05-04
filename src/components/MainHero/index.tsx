@@ -28,6 +28,7 @@ export const MainHero = ({ children }: MainHeroProps) => {
           </div>
           <Image
             src="/images/main/main.png"
+            //src="/images/main/tower.png"
             alt="Main Illustration"
             width={400}
             height={400}

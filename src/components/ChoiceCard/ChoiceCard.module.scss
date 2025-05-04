@@ -2,8 +2,9 @@
 @use '@/styles/mixins.scss' as *;
 
 .cardContainer {
-  width: 350px;
-  height: 350px;
+  width: 28%;
+  min-width: 300px;
+  aspect-ratio: 1;
   position: relative;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -14,7 +15,10 @@
     transform: translateY(-5px);
   }
 
-
+  @media (max-width: 768px) {
+    width: 80%;
+    //margin: 20px auto;
+  }
 }
 
 .card {

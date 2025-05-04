@@ -1,0 +1,243 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.main {
+  margin-top: 100px; // Отступ для хедера
+  //min-height: calc(100vh - 100px);
+  width: 100%;
+}
+
+.container {
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.name {
+  @include title-large;
+  color: $darkred;
+  margin-bottom: 30px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 300px;
+}
+
+.infoRow {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoLabel {
+  @include title-medium;
+  color: $darkred;
+  margin-bottom: 8px;
+}
+
+.infoInput {
+  @include body-thin;
+  padding: 10px;
+  border: 1px solid $purple;
+  border-radius: 5px;
+  background-color: $lightpink;
+  max-width: 300px;
+  width: 100%;
+}
+
+.logoutButton {
+  @include body-bold;
+  margin-top: 26px;
+  background-color: transparent;
+  color: $darkred;
+  border: 1px solid $darkred;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  max-width: 300px;
+  
+  &:hover {
+    background-color: rgba($darkred, 0.1);
+  }
+}
+
+.pointsSection {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.pointsLabel {
+  @include title-medium;
+  color: $darkred;
+  margin-bottom: 0px;
+}
+
+.pointsBox {
+  background-color: $lightpink;
+  border-radius: 10px;
+  padding: 15px 20px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.pointsAmount {
+  @include title-large;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cherryIcon {
+  display: inline-flex;
+  margin-left: 5px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.button {
+  @include body-bold;
+  background-color: $darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  max-width: 300px;
+  
+  &:hover {
+    background-color: darken($darkred, 10%);
+  }
+}
+
+// Стили для страниц истории
+.pageHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.backButton {
+  @include body-bold;
+  background: none;
+  border: none;
+  color: $darkred;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px 10px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 800px;
+}
+
+.historyItem {
+  background-color: $lightpink;
+  border-radius: 10px;
+  padding: 15px 20px;
+  transition: transform 0.2s;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.historyDate {
+  @include body-thin;
+  color: $darkred;
+  margin-bottom: 5px;
+}
+
+.historyDescription {
+  @include body-bold;
+  margin-bottom: 5px;
+}
+
+.historyAmount {
+  @include body-bold;
+  color: $darkred;
+  font-size: 18px;
+}
+
+.emptyHistory {
+  @include body-bold;
+  color: $purple;
+  text-align: center;
+  padding: 30px;
+  background-color: $lightpink;
+  border-radius: 10px;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.orderStatus {
+  @include body-bold;
+  color: $darkpurple;
+  padding: 4px 10px;
+  background-color: rgba($purple, 0.2);
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.orderDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderItems {
+  @include body-thin;
+  color: $darkred;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  
+  .infoInput, .button, .logoutButton {
+    max-width: 100%;
+  }
+  
+  .orderDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .historyAmount {
+    margin-top: 5px;
+  }
+} 
