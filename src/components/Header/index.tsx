@@ -1,15 +1,22 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { useRouter, usePathname } from 'next/navigation';
 
 import styles from './Header.module.scss';
 import Login from "../Login";
+import { api } from "../../utils/api";
+import { isAuthenticated, setAuthToken, setUserProfile, setUserId, removeAuthToken } from "../../utils/auth";
 
 export default function Header() {
     const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
     
     // Перенесенные состояния из компонента Login
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -20,6 +27,65 @@ export default function Header() {
     const [success, setSuccess] = useState<boolean>(false);
     const [codeSent, setCodeSent] = useState(false);
     const [codeVerified, setCodeVerified] = useState(false);
+    
+    // Проверяем авторизацию при загрузке и при изменении пути
+    useEffect(() => {
+        const checkAuth = () => {
+            const authenticated = isAuthenticated();
+            console.log('Проверка авторизации:', authenticated); // Отладочный вывод
+            setCodeVerified(authenticated);
+        };
+
+        // Проверяем при монтировании компонента
+        checkAuth();
+
+        // Также создаем обработчик события storage для синхронизации между вкладками
+        const handleStorageChange = (event: StorageEvent) => {
+            if (event.key === 'auth_token' || event.key === 'user_id') {
+                checkAuth();
+            }
+        };
+
+        // Обработчик для слушателя события auth-state-changed
+        const handleAuthStateChanged = () => {
+            checkAuth();
+        };
+
+        // Добавляем слушатели событий
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('auth-state-changed', handleAuthStateChanged);
+
+        // Очищаем слушатели при размонтировании
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('auth-state-changed', handleAuthStateChanged);
+        };
+    }, [pathname]); // Перепроверяем при изменении пути
+
+    // Закрываем мобильное меню при изменении маршрута
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
+
+    // Обработчик для закрытия мобильного меню при клике вне его
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node) && 
+                !(event.target as Element).closest(`.${styles.burgerButton}`)) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        if (isMobileMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMobileMenuOpen, styles.burgerButton]);
 
     // Сбрасываем верификацию кода при закрытии виджета, если пользователь уже авторизован
     useEffect(() => {
@@ -32,13 +98,34 @@ export default function Header() {
         }
     }, [isLoginOpen, codeVerified]);
 
+    // Функция для проверки авторизации
+    const checkAuth = () => {
+        return isAuthenticated();
+    };
+
     const toggleLogin = (e?: React.MouseEvent) => {
         // Предотвращаем всплытие события, чтобы избежать немедленного закрытия
         // виджета при клике на кнопку
         if (e) {
             e.stopPropagation();
         }
+        
+        // Проверяем статус авторизации. Если пользователь уже авторизован,
+        // перенаправляем его в личный кабинет вместо открытия окна авторизации
+        if (checkAuth()) {
+            router.push('/profile');
+            return;
+        }
+        
         setIsLoginOpen(prev => !prev);
+        // Закрываем мобильное меню, если оно открыто
+        if (isMobileMenuOpen) {
+            setIsMobileMenuOpen(false);
+        }
+    };
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(prev => !prev);
     };
 
     // Обработчики для управления состоянием логина
@@ -76,19 +163,7 @@ export default function Header() {
         console.log("Отправляем номер:", formattedPhone);
 
         try {
-            const response = await fetch("http://localhost:3001/auth/request-code", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ phoneNumber: formattedPhone }),
-            });
-
-            if (!response.ok) {
-                throw new Error("Ошибка при запросе кода");
-            }
-
-            const data = await response.json();
+            const data = await api.requestCode(formattedPhone);
             console.log("Код отправлен:", data);
 
             setSuccess(true);
@@ -106,47 +181,60 @@ export default function Header() {
         setSuccess(false);
 
         try {
-            const response = await fetch("http://localhost:3001/auth/verify", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ phoneNumber: formattedPhone, code: verificationCode }),
-            });
-
-            if (!response.ok) {
-                throw new Error("Ошибка верификации кода");
-            }
-
-            const data = await response.json();
+            const data = await api.verifyCode(formattedPhone, verificationCode);
             console.log("Верификация успешна:", data);
 
-            setSuccess(true);
-            setCodeVerified(true);
-            
-            // Закрываем виджет после успешной авторизации через некоторое время
-            setTimeout(() => {
-                setIsLoginOpen(false);
-                // Временно закомментирован переход на страницу профиля
-                // window.location.href = '/profile';
-            }, 2000);
+            // Сохраняем токен и данные пользователя
+            if (data.access_token && data.user && data.user.id) {
+                setAuthToken(data.access_token);
+                setUserProfile(data.user);
+                setUserId(data.user.id); // Явно сохраняем ID пользователя
+                
+                setSuccess(true);
+                setCodeVerified(true);
+                
+                // Инициируем событие для синхронизации между компонентами
+                window.dispatchEvent(new Event('auth-state-changed'));
+                
+                // Закрываем виджет после успешной авторизации через некоторое время
+                setTimeout(() => {
+                    setIsLoginOpen(false);
+                    router.push('/profile');
+                }, 2000);
+            } else {
+                throw new Error("Неполные данные получены от сервера");
+            }
         } catch (error) {
             setError((error as Error).message);
+            setCodeVerified(false);
         } finally {
             setLoading(false);
         }
     };
 
-    // Функция сброса состояния логина (если потребуется)
-    const resetLoginState = () => {
-        setPhoneNumber("");
-        setFormattedPhone("");
-        setError(null);
-        setVerificationCode("");
-        setLoading(false);
-        setSuccess(false);
-        setCodeSent(false);
+    // Выход из системы
+    const handleLogout = () => {
+        console.log('Выход из системы');
+        // Удаляем данные авторизации из localStorage
+        removeAuthToken();
+        
+        // Сбрасываем локальное состояние
         setCodeVerified(false);
+        setVerificationCode('');
+        setCodeSent(false);
+        setSuccess(false);
+        setError(null);
+        
+        // Инициируем событие для синхронизации между компонентами
+        window.dispatchEvent(new Event('auth-state-changed'));
+        
+        // Закрываем мобильное меню, если оно открыто
+        if (isMobileMenuOpen) {
+            setIsMobileMenuOpen(false);
+        }
+        
+        // Перенаправляем на главную страницу после выхода
+        router.push('/');
     };
 
     // Функция форматирования телефона для отображения
@@ -166,36 +254,79 @@ export default function Header() {
                         <Image src="/icons/logo.svg" alt="logo" fill
                             style={{ objectFit: 'contain' }} />
                     </Link>
+                    
+                    {/* Бургер иконка для мобильной версии */}
+                    <button 
+                        className={`${styles.burgerButton} ${isMobileMenuOpen ? styles.active : ''}`} 
+                        onClick={toggleMobileMenu}
+                        aria-label="Меню"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 
-                    <nav className={styles.navigation}>
-                        <Link href="/about">О нас</Link>
-                        <Link href="/preorder">Как сделать предзаказ</Link>
+                    {/* Навигация - будет скрыта в мобильной версии */}
+                    <nav className={`${styles.navigation} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`} ref={mobileMenuRef}>
+                        <div className={styles.navigationLinks}>
+                            <Link href="/about">О нас</Link>
+                            <Link href="/preorder">Как сделать предзаказ</Link>
+                            {/* Добавляем текстовые ссылки для мобильного меню */}
+                            {checkAuth() ? (
+                                <>
+                                    <Link href="/profile" className={`${styles.mobileLink}`}>Личный кабинет</Link>
+                                    {/* <button 
+                                        onClick={handleLogout} 
+                                        className={`${styles.mobileLink} ${styles.mobileButton}`}
+                                    >
+                                        Выйти
+                                    </button> */}
+                                </>
+                            ) : (
+                                <button 
+                                    onClick={toggleLogin} 
+                                    className={`${styles.mobileLink} ${styles.mobileButton}`}
+                                >
+                                    Личный кабинет
+                                </button>
+                            )}
+                            <Link href="/cart" className={`${styles.mobileLink}`}>Корзина</Link>
+                        </div>
+                        
                         <div className={styles.icons}>
-                        {/* Кнопка для открытия/закрытия формы или перехода в профиль */}
-                        {codeVerified ? (
-                            <Link href="/profile" className={styles.loginButton}>
-                                <Image 
-                                    src="/icons/LK-verified.svg" 
-                                    alt="Личный кабинет" 
-                                    width={30} 
-                                    height={30} 
-                                    className={styles.iconsIcons} 
-                                />
-                            </Link>
-                        ) : (
-                            <button 
-                                className={styles.loginButton} 
-                                onClick={toggleLogin}
-                            >
-                                <Image 
-                                    src="/icons/LK.svg" 
-                                    alt="Личный кабинет" 
-                                    width={30} 
-                                    height={30} 
-                                    className={styles.iconsIcons} 
-                                />
-                            </button>
-                        )}
+                            {checkAuth() ? (
+                                <div className={styles.userMenu}>
+                                    <Link href="/profile" className={styles.loginButton}>
+                                        <Image 
+                                            src="/icons/LK.svg" 
+                                            alt="Личный кабинет" 
+                                            width={30} 
+                                            height={30} 
+                                            className={styles.iconsIcons} 
+                                        />
+                                    </Link>
+                                    <div className={styles.dropdown}>
+                                        <Link href="/profile">
+                                            <button>Профиль</button>
+                                        </Link>
+                                       {/* <button onClick={handleLogout}>Выйти</button> */}
+                                    </div>
+                                </div>
+                            ) : (
+                                <button 
+                                    className={styles.loginButton} 
+                                    onClick={toggleLogin}
+                                >
+                                    <Image 
+                                        src="/icons/LK.svg" 
+                                        alt="Личный кабинет" 
+                                        width={30} 
+                                        height={30} 
+                                        className={styles.iconsIcons} 
+                                    />
+                                </button>
+                            )}
+                            
                             <Link href="/cart">
                                 <Image src="/icons/cart.svg" alt="Корзина" width={30} height={30} className={styles.iconsIcons} />
                             </Link>
@@ -205,7 +336,7 @@ export default function Header() {
             </header>
 
             {/* Передаем все состояния и обработчики в компонент Login */}
-            {isLoginOpen && (
+            {isLoginOpen && !checkAuth() && (
                 <Login 
                     onClose={toggleLogin} 
                     phoneNumber={phoneNumber}
@@ -216,6 +347,7 @@ export default function Header() {
                     success={success}
                     codeSent={codeSent}
                     codeVerified={codeVerified}
+                    checkAuth={checkAuth}
                     onPhoneChange={handlePhoneChange}
                     onCodeChange={handleCodeChange}
                     onRequestCode={handleRequestCode}

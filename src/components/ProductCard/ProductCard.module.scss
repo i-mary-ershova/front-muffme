@@ -7,11 +7,14 @@
   width: 300px;
   padding: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px; /* Минимальная высота для карточки */
+  position: relative;
 
   @media (max-width:1024px) {
     width: 200px;
-    flex-direction: column;
-    gap: 100px;
+    min-height: 350px;
   }
 }
 
@@ -39,9 +42,15 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+  margin-top: auto; /* Отодвигает контейнер вниз */
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  
   @media (max-width: 1024px) {
     flex-direction: column;
-    align-items: stretch;  
+    align-items: stretch;
   }
 }
 
@@ -72,5 +81,4 @@
   @media (max-width: 1024px) {
     width: 100%;
   }
-
 } 

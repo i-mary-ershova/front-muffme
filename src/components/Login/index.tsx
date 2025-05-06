@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./Login.module.scss";
+import { useRouter } from "next/navigation";
 
 interface LoginProps {
   onClose: () => void;
@@ -11,6 +12,7 @@ interface LoginProps {
   success: boolean;
   codeSent: boolean;
   codeVerified: boolean;
+  checkAuth: () => boolean;
   onPhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCodeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRequestCode: () => void;
@@ -29,6 +31,7 @@ const Login: React.FC<LoginProps> = ({
   success,
   codeSent,
   codeVerified,
+  checkAuth,
   onPhoneChange,
   onCodeChange,
   onRequestCode,
@@ -39,6 +42,16 @@ const Login: React.FC<LoginProps> = ({
   const boxRef = useRef<HTMLDivElement>(null);
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  // Если пользователь авторизован, перенаправляем на страницу профиля и закрываем окно
+  useEffect(() => {
+    if (checkAuth()) {
+      router.push('/profile');
+      onClose();
+      return;
+    }
+  }, [checkAuth, router, onClose]);
 
   const handleContainerClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -74,6 +87,11 @@ const Login: React.FC<LoginProps> = ({
       phoneInputRef.current?.focus();
     }
   }, [codeSent]);
+
+  // Если пользователь авторизован, не отображаем компонент
+  if (checkAuth()) {
+    return null;
+  }
 
   return (
     <div className={styles.container} onClick={handleContainerClick}>
