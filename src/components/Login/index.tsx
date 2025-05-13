@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import { useRouter } from "next/navigation";
 
@@ -43,15 +43,21 @@ const Login: React.FC<LoginProps> = ({
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  // Set client-side indicator when component mounts
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Если пользователь авторизован, перенаправляем на страницу профиля и закрываем окно
   useEffect(() => {
-    if (checkAuth()) {
+    if (isClient && checkAuth()) {
       router.push('/profile');
       onClose();
       return;
     }
-  }, [checkAuth, router, onClose]);
+  }, [checkAuth, router, onClose, isClient]);
 
   const handleContainerClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -87,11 +93,6 @@ const Login: React.FC<LoginProps> = ({
       phoneInputRef.current?.focus();
     }
   }, [codeSent]);
-
-  // Если пользователь авторизован, не отображаем компонент
-  if (checkAuth()) {
-    return null;
-  }
 
   return (
     <div className={styles.container} onClick={handleContainerClick}>

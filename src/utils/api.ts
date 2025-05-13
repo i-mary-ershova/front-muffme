@@ -3,10 +3,32 @@ import { getAuthHeaders, removeAuthToken, getUserId } from './auth';
 // Базовый URL API
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
+// Типизация данных пользователя
+interface UserProfile {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  birthDate: string;
+  bonusInfo?: {
+    currentAmount: number;
+    totalEarned: number;
+  };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 // Типизация ответа от сервера при аутентификации
 interface AuthResponse {
   access_token: string;
-  user: any; // можно заменить на конкретный тип профиля пользователя
+  user: UserProfile;
+}
+
+// Типизация для данных регистрации
+interface RegisterUserData {
+  name: string;
+  phoneNumber: string;
+  birthDate: string;
+  code: string;
 }
 
 // Простой API-клиент для работы с бэкендом
@@ -108,6 +130,29 @@ export const api = {
   // Верификация кода и получение токена
   async verifyCode(phoneNumber: string, code: string): Promise<AuthResponse> {
     return this.post('/auth/verify', { phoneNumber, code }, false);
+  },
+
+  // Регистрация нового пользователя
+  async registerUser(userData: RegisterUserData): Promise<AuthResponse> {
+    // Сначала верифицируем код и получаем токен
+    const authResponse = await this.verifyCode(userData.phoneNumber, userData.code);
+    
+    // Затем обновляем профиль с дополнительными данными
+    const userId = authResponse.user.id;
+    await this.updateProfile(userId, {
+      name: userData.name,
+      birthday: userData.birthDate
+    });
+    
+    // Возвращаем обновленные данные
+    return {
+      ...authResponse,
+      user: {
+        ...authResponse.user,
+        name: userData.name,
+        birthDate: userData.birthDate
+      }
+    };
   },
 
   async getProfile(userId: string | number) {

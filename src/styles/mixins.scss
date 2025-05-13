@@ -1,38 +1,39 @@
 @use 'variables' as *;
 
-@mixin title-large {
+@mixin kreadon-large {
   font-size: 48px;
   font-family: $font-kreadon;
   line-height: 1.2;
 
   @media (max-width: 768px) {
-    font-size: 32px;
+    font-size: 36px;
   }
 }
 
-@mixin title-medium {
+@mixin title-large {
   font-size: 24px;
   font-family: $font-montserrat;
   font-weight: 500;
-
+  line-height: 1.2;
   @media (max-width: 768px) {
     font-size: 20px;
   }
 }
 
 @mixin body-thin {
-  font-size: 18px;
+  font-size: 20px;
   font-family: $font-montserrat;
-
+  line-height: 1.5;
   @media (max-width: 768px) {
     font-size: 16px;
   }
 }
 
 @mixin body-bold {
-  font-size: 18px;
+  font-size: 20px;
   font-family: $font-montserrat;
   font-weight: 500;
+  line-height: 1.5;
 
   @media (max-width: 768px) {
     font-size: 16px;

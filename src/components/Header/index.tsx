@@ -18,6 +18,9 @@ export default function Header() {
     const pathname = usePathname();
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     
+    // Add state for client-side rendering detection
+    const [isClient, setIsClient] = useState(false);
+    
     // Перенесенные состояния из компонента Login
     const [phoneNumber, setPhoneNumber] = useState("");
     const [formattedPhone, setFormattedPhone] = useState("");
@@ -28,6 +31,11 @@ export default function Header() {
     const [codeSent, setCodeSent] = useState(false);
     const [codeVerified, setCodeVerified] = useState(false);
     
+    // Mark when component is mounted on client
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+    
     // Проверяем авторизацию при загрузке и при изменении пути
     useEffect(() => {
         const checkAuth = () => {
@@ -36,31 +44,34 @@ export default function Header() {
             setCodeVerified(authenticated);
         };
 
-        // Проверяем при монтировании компонента
-        checkAuth();
-
-        // Также создаем обработчик события storage для синхронизации между вкладками
-        const handleStorageChange = (event: StorageEvent) => {
-            if (event.key === 'auth_token' || event.key === 'user_id') {
-                checkAuth();
-            }
-        };
-
-        // Обработчик для слушателя события auth-state-changed
-        const handleAuthStateChanged = () => {
+        // Only check auth on client side
+        if (isClient) {
+            // Проверяем при монтировании компонента
             checkAuth();
-        };
 
-        // Добавляем слушатели событий
-        window.addEventListener('storage', handleStorageChange);
-        window.addEventListener('auth-state-changed', handleAuthStateChanged);
+            // Также создаем обработчик события storage для синхронизации между вкладками
+            const handleStorageChange = (event: StorageEvent) => {
+                if (event.key === 'auth_token' || event.key === 'user_id') {
+                    checkAuth();
+                }
+            };
 
-        // Очищаем слушатели при размонтировании
-        return () => {
-            window.removeEventListener('storage', handleStorageChange);
-            window.removeEventListener('auth-state-changed', handleAuthStateChanged);
-        };
-    }, [pathname]); // Перепроверяем при изменении пути
+            // Обработчик для слушателя события auth-state-changed
+            const handleAuthStateChanged = () => {
+                checkAuth();
+            };
+
+            // Добавляем слушатели событий
+            window.addEventListener('storage', handleStorageChange);
+            window.addEventListener('auth-state-changed', handleAuthStateChanged);
+
+            // Очищаем слушатели при размонтировании
+            return () => {
+                window.removeEventListener('storage', handleStorageChange);
+                window.removeEventListener('auth-state-changed', handleAuthStateChanged);
+            };
+        }
+    }, [pathname, isClient]); // Перепроверяем при изменении пути и когда компонент становится клиентским
 
     // Закрываем мобильное меню при изменении маршрута
     useEffect(() => {
@@ -100,24 +111,22 @@ export default function Header() {
 
     // Функция для проверки авторизации
     const checkAuth = () => {
+        // Only check auth on client
+        if (typeof window === 'undefined') {
+            return false;
+        }
         return isAuthenticated();
     };
 
     const toggleLogin = (e?: React.MouseEvent) => {
-        // Предотвращаем всплытие события, чтобы избежать немедленного закрытия
-        // виджета при клике на кнопку
+        // Предотвращаем всплытие события
         if (e) {
             e.stopPropagation();
         }
         
-        // Проверяем статус авторизации. Если пользователь уже авторизован,
-        // перенаправляем его в личный кабинет вместо открытия окна авторизации
-        if (checkAuth()) {
-            router.push('/profile');
-            return;
-        }
-        
-        setIsLoginOpen(prev => !prev);
+        // Просто перенаправляем пользователя в личный кабинет
+        router.push('/profile');
+
         // Закрываем мобильное меню, если оно открыто
         if (isMobileMenuOpen) {
             setIsMobileMenuOpen(false);
@@ -272,7 +281,7 @@ export default function Header() {
                             <Link href="/about">О нас</Link>
                             <Link href="/preorder">Как сделать предзаказ</Link>
                             {/* Добавляем текстовые ссылки для мобильного меню */}
-                            {checkAuth() ? (
+                            {isClient && checkAuth() ? (
                                 <>
                                     <Link href="/profile" className={`${styles.mobileLink}`}>Личный кабинет</Link>
                                     {/* <button 
@@ -294,23 +303,18 @@ export default function Header() {
                         </div>
                         
                         <div className={styles.icons}>
-                            {checkAuth() ? (
+                            {isClient && checkAuth() ? (
                                 <div className={styles.userMenu}>
                                     <Link href="/profile" className={styles.loginButton}>
                                         <Image 
-                                            src="/icons/LK.svg" 
+                                            src="/icons/header/LK.svg" 
                                             alt="Личный кабинет" 
                                             width={30} 
                                             height={30} 
                                             className={styles.iconsIcons} 
                                         />
                                     </Link>
-                                    <div className={styles.dropdown}>
-                                        <Link href="/profile">
-                                            <button>Профиль</button>
-                                        </Link>
-                                       {/* <button onClick={handleLogout}>Выйти</button> */}
-                                    </div>
+                                   
                                 </div>
                             ) : (
                                 <button 
@@ -318,7 +322,7 @@ export default function Header() {
                                     onClick={toggleLogin}
                                 >
                                     <Image 
-                                        src="/icons/LK.svg" 
+                                        src="/icons/header/LK.svg" 
                                         alt="Личный кабинет" 
                                         width={30} 
                                         height={30} 
@@ -328,7 +332,7 @@ export default function Header() {
                             )}
                             
                             <Link href="/cart">
-                                <Image src="/icons/cart.svg" alt="Корзина" width={30} height={30} className={styles.iconsIcons} />
+                                <Image src="/icons/header/cart.svg" alt="Корзина" width={30} height={30} className={styles.iconsIcons} />
                             </Link>
                         </div>
                     </nav>
@@ -336,7 +340,7 @@ export default function Header() {
             </header>
 
             {/* Передаем все состояния и обработчики в компонент Login */}
-            {isLoginOpen && !checkAuth() && (
+            {isLoginOpen && (
                 <Login 
                     onClose={toggleLogin} 
                     phoneNumber={phoneNumber}

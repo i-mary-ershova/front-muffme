@@ -38,11 +38,12 @@
   height: 300px;
   background-color: $lightpink;
   border-radius: 20px 0px 20px 20px;
+  //border: 2px solid $purple;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 15px #7268c7;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   margin-right: 60px; /* Отступ от правого края */
   margin-top: 0; /* Прижимаем к верхнему краю */
 }
@@ -59,7 +60,7 @@
 }
 
 .title {
-  @include title-large;
+  @include kreadon-large;
   color: black;
   margin-bottom: 20px;
 }
@@ -79,7 +80,7 @@
   @include body-thin;
   padding: 10px;
   background-color: $darkred; // Цвет кнопки
-  color: white;
+  color: $light-color;
   border: none;
   border-radius: 5px;
   cursor: pointer;
