@@ -50,13 +50,13 @@ export default function Footer() {
                 </Link></li>
                 <div className={styles.socialIcons}>
               <a href="https://t.me/muffme_tmn" target="_blank" rel="noopener noreferrer">
-                <Image src="/socials/telegram.svg" alt="Telegram" width={30} height={30} />
+                <Image src="/icons/socials/telegram.svg" alt="Telegram" width={30} height={30} />
               </a>
               {/* <a href="https://www.instagram.com/muffme_tmn?igsh=b2E0OHpsaWU0dHIx" target="_blank" rel="noopener noreferrer">
                 <Image src="/socials/insta.svg" alt="Instagram" width={30} height={30} />
               </a>*/}
               <a href="https://vk.com/muffme_tmn" target="_blank" rel="noopener noreferrer">
-                <Image src="/socials/VK.svg" alt="VK" width={30} height={30} />
+                <Image src="/icons/socials/VK.svg" alt="VK" width={30} height={30} />
               </a>
               {/* <Image src="/socials/tiktok.svg" alt="TikTok" width={30} height={30} /> */}
             </div>

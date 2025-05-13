@@ -60,8 +60,8 @@
 }
 
 .title {
-  color: white;
-  @include title-large;
+  color: $light-color;
+  @include kreadon-large;
   text-align: center;
   margin-bottom: 20px;
   //margin-top: 40px;

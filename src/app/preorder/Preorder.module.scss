@@ -13,7 +13,7 @@
 }
 
 .title {
-  @include title-large;
+  @include kreadon-large;
   color: $darkred;
   margin-bottom: 30px;
   text-align: center;
@@ -41,7 +41,7 @@
 }
 
 .subtitle {
-  @include title-medium;
+  @include title-large;
   color: $darkred;
   margin-bottom: 20px;
 }
@@ -89,11 +89,13 @@
 
 .form {
   display: flex;
+
   flex-direction: column;
   gap: 15px;
 }
 
 .formGroup {
+  
   display: flex;
   flex-direction: column;
 }
@@ -107,9 +109,9 @@
 .input, .textarea {
   @include body-thin;
   padding: 12px;
-  border: 1px solid $purple;
+  border: 1px solid $pink;
   border-radius: 5px;
-  background-color: white;
+  background-color: $light-color;
   width: 100%;
   
   &:focus {
@@ -119,7 +121,7 @@
   }
   
   &::placeholder {
-    color: rgba($darkpurple, 0.4);
+    color: rgba($darkred, 0.4);
   }
 }
 
@@ -145,7 +147,7 @@
 .button {
   @include body-bold;
   background-color: $darkred;
-  color: white;
+  color: $light-color;
   border: none;
   border-radius: 5px;
   padding: 12px 20px;

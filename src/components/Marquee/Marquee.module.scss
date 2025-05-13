@@ -4,14 +4,39 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: $darkred;
+  background-color: $light-color;
   padding: 0px 0;
+  
+  // Добавляем псевдоэлементы для создания градиентных накладок
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  // Градиент слева (от цвета фона к прозрачному)
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, $light-color, transparent);
+  }
+  
+  // Градиент справа (от прозрачного к цвету фона)
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, $light-color, transparent);
+  }
 }
 
 .marqueeTrack {
   display: flex;
-  animation: marquee 150s linear infinite;
+  animation: marquee 300s linear infinite;
   width: fit-content;
+  position: relative;
 }
 
 .marqueeContent {

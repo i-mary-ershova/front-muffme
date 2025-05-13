@@ -3,7 +3,7 @@ import MainHero from '@/components/MainHero';
 import DessertSection from '@/components/DessertSection';
 import Marquee from '@/components/Marquee';
 import PromoBanner from '@/components/PromoBanner';
-
+import Catalog from '@/components/Catalog';
 export default async function Home() {
     return (
         <main>
@@ -43,7 +43,8 @@ export default async function Home() {
                 </Suspense>
             </MainHero>
             <Marquee />
-            <DessertSection />
+            {/*<DessertSection />*/}
+            <Catalog />
         </main>
 
     );
