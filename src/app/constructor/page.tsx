@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Header from '@/components/Header';
@@ -17,7 +18,6 @@ export default function ConstructorPage() {
       <Header />
       <main className={styles.main}>
         <div className={styles.container}>
-          
           <div className={styles.content}>
             <div className={styles.imageContainer}>
               <Image 
@@ -26,6 +26,7 @@ export default function ConstructorPage() {
                 width={900} 
                 height={600} 
                 className={styles.previewImage}
+                priority
               />
             </div>
             
@@ -39,6 +40,7 @@ export default function ConstructorPage() {
             <button 
               onClick={handleGoBack} 
               className={styles.backButton}
+              type="button"
             >
               Вернуться
             </button>
@@ -47,4 +49,4 @@ export default function ConstructorPage() {
       </main>
     </>
   );
-} 
+}

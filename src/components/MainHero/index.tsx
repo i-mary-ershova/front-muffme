@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './MainHero.module.scss';
 import { ReactNode } from 'react';
 
@@ -9,6 +10,12 @@ interface MainHeroProps {
 }
 
 export const MainHero = ({ children }: MainHeroProps) => {
+  const router = useRouter();
+
+  const handleConstructorClick = () => {
+    router.push('/constructor');
+  };
+
   return (
     <div className={styles.pageBackground}>
       <section className={styles.hero}>
@@ -49,7 +56,11 @@ export const MainHero = ({ children }: MainHeroProps) => {
               className={styles.mainImage}
               priority
             />
-            <button className={styles.createButton}>
+            <button 
+              className={styles.createButton}
+              onClick={handleConstructorClick}
+              type="button"
+            >
               Собери свой маффин!
             </button>
           </div>

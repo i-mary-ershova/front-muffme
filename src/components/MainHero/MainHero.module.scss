@@ -217,12 +217,20 @@
   @include title-large;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color $transition;
+  transition: all $transition;
   position: relative;
   z-index: 1;
   margin-bottom: 20px;
+  
   &:hover {
     background-color: darken($darkred, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   @media (max-width: 768px) {
