@@ -76,7 +76,7 @@
   text-align: center;
   transform: translateX(-50%);
   background-color: $light-color;
-  padding: 15px 30px;
+  padding: 10px 30px;
   border-radius: 20px;
   white-space: nowrap;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -84,6 +84,7 @@
   span {
     @include body-bold;
     color: black;
+  
   }
 }
 
