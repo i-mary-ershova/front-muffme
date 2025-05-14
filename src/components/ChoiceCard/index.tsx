@@ -17,7 +17,8 @@ const cardData: CardData[] = [
   {
     imageSrc: '/images/main/construct.png',
     label: 'Собрать маффин',
-    alt: ''
+    alt: '',
+    href: '/constructor'
   },
   {
     imageSrc: '/images/main/author2.png',
